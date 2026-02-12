@@ -3,7 +3,6 @@ package com.ruoyi.framework.config.properties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import org.apache.commons.lang3.RegExUtils;
@@ -20,7 +19,7 @@ import com.ruoyi.common.annotation.Anonymous;
 
 /**
  * 设置Anonymous注解允许匿名访问的url
- * 
+ *
  * @author ruoyi
  */
 @Configuration
@@ -43,15 +42,25 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
         map.keySet().forEach(info -> {
             HandlerMethod handlerMethod = map.get(info);
 
-            // 获取方法上边的注解 替代path variable 为 *
+            // 核心修改1：先判断info.getPatternsCondition()是否为null，再处理方法注解
             Anonymous method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Anonymous.class);
-            Optional.ofNullable(method).ifPresent(anonymous -> Objects.requireNonNull(info.getPatternsCondition().getPatterns())
-                    .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK))));
+            Optional.ofNullable(method).ifPresent(anonymous -> {
+                // 分层判空：先判PatternsCondition，再判Patterns，避免NPE
+                if (info.getPatternsCondition() != null && info.getPatternsCondition().getPatterns() != null) {
+                    info.getPatternsCondition().getPatterns()
+                        .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
+                }
+            });
 
-            // 获取类上边的注解, 替代path variable 为 *
+            // 核心修改2：同样增加null校验，处理类注解
             Anonymous controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Anonymous.class);
-            Optional.ofNullable(controller).ifPresent(anonymous -> Objects.requireNonNull(info.getPatternsCondition().getPatterns())
-                    .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK))));
+            Optional.ofNullable(controller).ifPresent(anonymous -> {
+                // 分层判空：兼容Spring 6返回null的场景
+                if (info.getPatternsCondition() != null && info.getPatternsCondition().getPatterns() != null) {
+                    info.getPatternsCondition().getPatterns()
+                        .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
+                }
+            });
         });
     }
 

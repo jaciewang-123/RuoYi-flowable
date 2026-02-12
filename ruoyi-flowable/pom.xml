@@ -62,13 +62,12 @@
 					<groupId>org.flowable</groupId>
 					<artifactId>flowable-spring-security</artifactId>
 				</exclusion>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-orm</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-boot-starter</artifactId>
-		</dependency>
-
 		<dependency>
 			<!-- websocket -->
 			<groupId>org.springframework.boot</groupId>
@@ -80,6 +79,26 @@
 			<groupId>com.googlecode.aviator</groupId>
 			<artifactId>aviator</artifactId>
 			<version>5.3.3</version>
+		</dependency>
+
+		<!-- 其他依赖保留，新增MyBatis-Plus依赖 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<!-- 保留之前排除低版本mybatis-spring的配置（如果有） -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.mybatis</groupId>
+					<artifactId>mybatis-spring</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- 强制引入适配Spring 6的mybatis-spring -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring.version}</version>
 		</dependency>
 
 	</dependencies>

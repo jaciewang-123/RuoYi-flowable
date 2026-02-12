@@ -16,7 +16,7 @@ ruoyi:
 # 开发环境配置
 server:
   # 服务器的HTTP端口，默认为8080
-  port: 8080
+  port: 8086
   servlet:
     # 应用的访问路径
     context-path: /
@@ -34,8 +34,10 @@ server:
 # 日志配置
 logging:
   level:
-    com.ruoyi: debug
-    org.springframework: warn
+    com.ruoyi: error
+    org.springframework: error
+    org.mybatis: error
+    com.baomidou.mybatisplus: error
 
 # 用户配置
 user:
@@ -52,7 +54,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: druid
+    active: '109'
   # 文件上传
   servlet:
     multipart:

@@ -1,6 +1,6 @@
 package com.ruoyi.framework.web.exception;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import com.ruoyi.common.exception.NonCaptureException;
 import org.slf4j.Logger;

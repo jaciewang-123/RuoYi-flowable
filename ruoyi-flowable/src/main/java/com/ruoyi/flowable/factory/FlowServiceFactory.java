@@ -5,7 +5,7 @@ import org.flowable.engine.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * flowable 引擎注入封装

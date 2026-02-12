@@ -1,8 +1,8 @@
 package com.ruoyi.system.service.impl;
 
+import jakarta.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.annotation.DataSource;

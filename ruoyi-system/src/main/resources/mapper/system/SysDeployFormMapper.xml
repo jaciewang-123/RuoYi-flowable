@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.SysDeployFormMapper">
     
-    <resultMap type="SysDeployForm" id="SysDeployFormResult">
+    <resultMap type="com.ruoyi.system.domain.SysDeployForm" id="SysDeployFormResult">
         <result property="id"    column="id"    />
         <result property="formId"    column="form_id"    />
         <result property="deployId"    column="deploy_id"    />
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, form_id, deploy_id from sys_deploy_form
     </sql>
 
-    <select id="selectSysDeployFormList" parameterType="SysDeployForm" resultMap="SysDeployFormResult">
+    <select id="selectSysDeployFormList" parameterType="com.ruoyi.system.domain.SysDeployForm" resultMap="SysDeployFormResult">
         <include refid="selectSysDeployFormVo"/>
         <where>  
             <if test="formId != null "> and form_id = #{formId}</if>
@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where t2.deploy_id = #{deployId} limit 1
     </select>
 
-    <insert id="insertSysDeployForm" parameterType="SysDeployForm" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSysDeployForm" parameterType="com.ruoyi.system.domain.SysDeployForm" useGeneratedKeys="true" keyProperty="id">
         insert into sys_deploy_form
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="formId != null">form_id,</if>
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
     </insert>
 
-    <update id="updateSysDeployForm" parameterType="SysDeployForm">
+    <update id="updateSysDeployForm" parameterType="com.ruoyi.system.domain.SysDeployForm">
         update sys_deploy_form
         <trim prefix="SET" suffixOverrides=",">
             <if test="formId != null">form_id = #{formId},</if>
